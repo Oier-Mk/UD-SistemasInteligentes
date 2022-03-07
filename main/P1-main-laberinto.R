@@ -19,9 +19,8 @@ source("../algorithms/blind/iterative-deepening-search.R")
 # Include functions for data analysis and result plot
 source("../algorithms/results-analysis/analyze-results.R")
 
-# Let's try with the Sudoku
 source("../problem/Laberinto.R")
-problem <- initialize.problem("../data/laberinto.txt") # Easy sudoku - Only 7 blank numbers
+problem <- initialize.problem("~/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/laberinto.txt")
 
 bfs_ts <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000)   
 bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)

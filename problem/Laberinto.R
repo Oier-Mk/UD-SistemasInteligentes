@@ -9,17 +9,22 @@
 
 # This function must return a list with the information needed to solve the problem.
 # (Depending on the problem, it should receive or not parameters)
-initialize.problem <- function() {
-  problem <- list() # Default value is an empty list.
-  file = "~/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/laberinto.txt"
+initialize.problem <- function(file) {
+  problem <- list() # Default xvalue is an empty list.
+  # file = "~/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/laberinto.txt"
   # This attributes are compulsory
   problem$name                <- paste0("Laberinto - [", file, "]")
-  problem$state_initial       <- read.csv(file, sep="\n", header = FALSE)
-  problem$state_final         <- #array de L R consecutivos y posicion arriba a la dcha
-  problem$actions_possible  <- data.frame(direction = c("Up", "Down", "Left", "Right"), stringsAsFactors = FALSE)
-
-
+  problem$size                <- c(as.integer(read.csv(file, sep=";", header = FALSE, nrows=1)[1]),as.integer(read.csv(file, sep=";", header = FALSE, nrows=1)[2]))
+  problem$table               <- read.csv(file, sep=";", header = FALSE, skip=1, nrows=problem$size)
+  problem$state_initial       <- c(as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=1+problem$size[1], nrows=1), 1,1)),as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=1+problem$size[1], nrows=1), 3,3)))
+  problem$state_final       <- c(as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=2+problem$size[1], nrows=1), 1,1)),as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=2+problem$size[1], nrows=1), 3,3)))
+  problem$actions_possible    <- data.frame(direction = c("Up", "Down", "Left", "Right"), stringsAsFactors = FALSE)
+  
   return(problem)
+}
+
+get.state <- function(coordenadas){
+  return(problem$table[[coordenadas[1]+1,coordenadas[2]+1]])
 }
 
 # Analyzes if an action can be applied in the received state.
@@ -27,22 +32,42 @@ initialize.problem <- function() {
 is.applicable <- function (state, action, problem) {
   result <- FALSE # Default value is FALSE.
   
-  #CONDICIONES PARA QUE SE HAGA O NO LA ACCI'ON
-  
+  state = c(2,2)
+
   if (action == "Up") {
-    return(row != 1)
+    condicion1 <- problem$size[1] > state[2]+1 #comprobacion de que no esta en el tope de arriba
+    condicion2 <- get.state(state) == "R"
+    condicion3 <- get.state(c(state[1],state[2]+1)) == "L"
+    condicion4 <- get.state(state) == "L"
+    condicion5 <- get.state(c(state[1],state[2]+1)) == "R"
+    if(condicion1 && ( (condicion2 && condicion3) || (condicion4 && condicion5) )) return(T)
   }
   
   if (action == "Down") {
-    return(row != problem$rows)
+    condicion1 <- 0 < state[2]-1 #comprobacion de que no esta en el tope de abajo
+    condicion2 <- get.state(state) == "R"
+    condicion3 <- get.state(c(state[1],state[2]+1)) == "L"
+    condicion4 <- get.state(state) == "L"
+    condicion5 <- get.state(c(state[1],state[2]+1)) == "R"
+    if(condicion1 && ( (condicion2 && condicion3) || (condicion4 && condicion5) )) return(T)
   }
   
   if (action == "Left") {
-    return(col != 1)
+    condicion1 <- 0 < state[1]-1 #comprobacion de que no esta en el tope de la izquierda
+    condicion2 <- get.state(state) == "R"
+    condicion3 <- get.state(c(state[1],state[2]+1)) == "L"
+    condicion4 <- get.state(state) == "L"
+    condicion5 <- get.state(c(state[1],state[2]+1)) == "R"
+    if(condicion1 && ( (condicion2 && condicion3) || (condicion4 && condicion5) )) return(T)
   }
   
   if (action == "Right") {
-    return(col != problem$columns)
+    condicion1 <- problem$size[2] > state[1]+1 #comprobacion de que no esta en el tope de la derecha
+    condicion2 <- get.state(state) == "R"
+    condicion3 <- get.state(c(state[1],state[2]+1)) == "L"
+    condicion4 <- get.state(state) == "L"
+    condicion5 <- get.state(c(state[1],state[2]+1)) == "R"
+    if(condicion1 && ( (condicion2 && condicion3) || (condicion4 && condicion5) )) return(T)
   }
   return(result)
 }
@@ -53,21 +78,23 @@ effect <- function (state, action, problem) {
   result <- state  
   
   if (action == "Up") {
-    # TODO se modifica result
+    result <- c(state[1],state[2]+1)
     return(result)
   }
   
   if (action == "Down") {    
-    # TODO se modifica result
+    result <- c(state[1],state[2]-1)
     return(result)
   }
   
   if (action == "Left") {
-    # TODO se modifica resultreturn(result)
+    result <- c(state[1]-1,state[2])
+    return(result)
   }
   
   if (action == "Right") {
-    # TODO se modifica resultreturn(result)
+    result <- c(state[1]+1,state[2])
+    return(result)
   }
 }
 
