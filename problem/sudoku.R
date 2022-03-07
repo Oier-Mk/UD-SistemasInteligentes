@@ -1,7 +1,7 @@
 # This function must return a list with the information needed to solve the problem.
 initialize.problem <- function(file) {
   problem <- list()
-  
+  file = "../data/sudoku-1.txt"
   # Compulsory attributes
   problem$name             <- paste0("Sudoku - [", file, "]")
   problem$state_initial    <- read.csv(file, header = FALSE)

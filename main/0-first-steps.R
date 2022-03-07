@@ -160,3 +160,4 @@ item2[[3]][2] # 2nd element of the 3rd element on item2
 # Lists of lists (in this case, list of persons)
 persons <- list(item1, item2) 
 persons[[1]]$cities[1] # 1st city of the 1st person of the list
+

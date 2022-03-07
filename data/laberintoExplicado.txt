@@ -1,0 +1,14 @@
+7;7						# filas; columnas
+L;R;L;R;R;R;L			# L=left | R=right, separadas por ;
+R;L;R;R;L;L;L
+L;R;L;R;L;R;L
+R;R;R;R;R;L;R
+L;L;L;R;L;L;R
+R;R;R;L;L;L;R
+L;R;L;R;L;R;L
+0,6						# X, Y
+6,0						# X, Y
+2,1;2,2;5,2;4,4;3,5		# Coordenadas X, Y separadas por ; (vacío = -)
+-						# Coordenadas X, Y separadas por ; (vacío = -)
+2,0;5,2;2,4				# Coordenadas X, Y separadas por ; (vacío = -)
+-						# Coordenadas X, Y separadas por ; (vacío = -)
