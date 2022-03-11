@@ -20,9 +20,13 @@ source("../algorithms/blind/iterative-deepening-search.R")
 source("../algorithms/results-analysis/analyze-results.R")
 
 source("../problem/Laberinto.R")
-problem <- initialize.problem("~/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/laberinto.txt")
+problem <- initialize.problem("~/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/feet-maze-1a.txt")
 
-bfs_ts <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000)   
+# bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
+
+
+
+bfs_ts <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000)
 bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
 dfs_ts <- depth.first.search(problem, max_iterations = 2500, count_print = 1000)
 dfs_gs <- depth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
@@ -32,12 +36,16 @@ dls10_ts <- depth.limited.search(problem, depth_limit = 49, max_iterations = 250
 dls10_gs <- depth.limited.search(problem, depth_limit = 49, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
 ids_ts <- iterative.deepening.search(problem, max_iterations = 2500, count_print = 1000)
 ids_gs <- iterative.deepening.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
+# ucs_ts <- uniform.cost.search(problem, max_iterations = 2500, count_print = 1000)
+# ucs_gs <- uniform.cost.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
+# bfs_ts <- greedy.best.first.search(problem, max_iterations = 2500, count_print = 1000)
+# bfs_gs <- greedy.best.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
 
 # Analyze the result of all the executions
-results <- analyze.results(list(bfs_ts, bfs_gs, 
-                                dfs_ts, dfs_gs, 
-                                dls6_ts, dls6_gs, 
-                                dls10_ts, dls10_gs, 
+results <- analyze.results(list(bfs_ts, bfs_gs,
+                                dfs_ts, dfs_gs,
+                                dls6_ts, dls6_gs,
+                                dls10_ts, dls10_gs,
                                 ids_ts, ids_gs), problem)
 # Print results in an HTML Table
 kable_material(kbl(results, caption = "Laberinto"), c("striped", "hover"))
