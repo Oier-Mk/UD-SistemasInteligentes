@@ -11,7 +11,7 @@
 # (Depending on the problem, it should receive or not parameters)
 initialize.problem <- function(file) {
   problem <- list() # Default xvalue is an empty list.
-  # file = "~/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/feet-maze-1a.txt"
+  file = "~/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/abcd-laberinto.txt"
   # This attributes are compulsory
   problem$name                <- paste0("Laberinto - [", file, "]")
   problem$size                <- c(as.integer(read.csv(file, sep=";", header = FALSE, nrows=1)[1]),as.integer(read.csv(file, sep=";", header = FALSE, nrows=1)[2]))
@@ -26,6 +26,9 @@ initialize.problem <- function(file) {
 get.state <- function(coordenadas){
   return(problem$table[[coordenadas[1],coordenadas[2]]])
 }
+
+state = c(1,2)
+get.state(state)
 
 # Analyzes if an action can be applied in the received state.
 # Estado lo que varia y problema lo que mantiene estatico
