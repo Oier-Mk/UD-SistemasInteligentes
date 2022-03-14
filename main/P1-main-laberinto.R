@@ -20,9 +20,15 @@ source("../algorithms/blind/iterative-deepening-search.R")
 source("../algorithms/results-analysis/analyze-results.R")
 
 source("../problem/Laberinto.R")
-problem <- initialize.problem("~/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/feet-maze-1a.txt")
+problem <- initialize.problem("../data/feet-maze-1a.txt")
 
-# bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
+v <- problem$state_initial #c(1,1)
+is.applicable(v,"Up",problem)
+is.applicable(v,"Down",problem)
+is.applicable(v,"Left",problem)
+is.applicable(v,"Right",problem)
+
+bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
 
 
 
