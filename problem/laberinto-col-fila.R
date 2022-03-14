@@ -11,93 +11,22 @@
 # (Depending on the problem, it should receive or not parameters)
 initialize.problem <- function(file) {
   problem <- list() # Default xvalue is an empty list.
-  file = "/Users/aidagomezbuenoberezo/Documents/sinteligentes/data/feet-maze-1a.txt"
+  file = "/Users/aidagomezbuenoberezo/Documents/sinteligentes/data/laberinto.txt"
   # This attributes are compulsory
   problem$name                <- paste0("Laberinto - [", file, "]")
   problem$size                <- c(as.integer(read.csv(file, sep=";", header = FALSE, nrows=1)[1]),as.integer(read.csv(file, sep=";", header = FALSE, nrows=1)[2]))
   problem$table               <- read.csv(file, sep=";", header = FALSE, skip=1, nrows=problem$size[1])
-  problem$state_initial       <- c(as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=1+problem$size[1], nrows=1), 3,3))+1,as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=1+problem$size[1], nrows=1), 1,1))+1)
-  problem$state_final         <- c(as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=2+problem$size[1], nrows=1), 3,3))+1,as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=2+problem$size[1], nrows=1), 1,1))+1)
+  problem$state_initial       <- c(as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=1+problem$size[1], nrows=1), 1,1))+1,as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=1+problem$size[1], nrows=1), 3,3))+1)
+  problem$state_final         <- c(as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=2+problem$size[1], nrows=1), 1,1))+1,as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=2+problem$size[1], nrows=1), 3,3))+1)
   problem$actions_possible    <- data.frame(direction = c("Up", "Down", "Left", "Right"), stringsAsFactors = FALSE)
   
   return(problem)
 }
 
 get.state <- function(coordenadas, problem){
-  # print(coordenadas[1])
-  # print(coordenadas[2])
-  #return(problem$table[coordenadas[2],coordenadas[1]])     #columna, fila
-  return(problem$table[coordenadas[1],coordenadas[2]]) #fila, columna - de izquierda a derecha y de arriba a abajo
+  return(problem$table[coordenadas[2],coordenadas[1]])     #columna, fila
+  #return(problem$table[coordenadas[1],coordenadas[2]])
 }
-
-#fila 1
-# get.state(c(1, 1), problem)
-# get.state(c(1, 2), problem)
-# get.state(c(1, 3), problem)
-# get.state(c(1, 4), problem)
-# get.state(c(1, 5), problem)
-# get.state(c(1, 6), problem)
-# get.state(c(1, 7), problem)
-
-#fila 2
-# get.state(c(2, 1), problem)
-# get.state(c(2, 2), problem)
-# get.state(c(2, 3), problem)
-# get.state(c(2, 4), problem)
-# get.state(c(2, 5), problem)
-# get.state(c(2, 6), problem)
-# get.state(c(2, 7), problem)
-
-# #fila 3
-# get.state(c(3, 1), problem)
-# get.state(c(3, 2), problem)
-# get.state(c(3, 3), problem)
-# get.state(c(3, 4), problem)
-# get.state(c(3, 5), problem)
-# get.state(c(3, 6), problem)
-# get.state(c(3, 7), problem)
-# 
-# #fila 4
-# get.state(c(4, 1), problem)
-# get.state(c(4, 2), problem)
-# get.state(c(4, 3), problem)
-# get.state(c(4, 4), problem)
-# get.state(c(4, 5), problem)
-# get.state(c(4, 6), problem)
-# get.state(c(4, 7), problem)
-# 
-# #fila 5
-# get.state(c(5, 1), problem)
-# get.state(c(5, 2), problem)
-# get.state(c(5, 3), problem)
-# get.state(c(5, 4), problem)
-# get.state(c(5, 5), problem)
-# get.state(c(5, 6), problem)
-# get.state(c(5, 7), problem)
-# 
-# #fila 6
-# get.state(c(6, 1), problem)
-# get.state(c(6, 2), problem)
-# get.state(c(6, 3), problem)
-# get.state(c(6, 4), problem)
-# get.state(c(6, 5), problem)
-# get.state(c(6, 6), problem)
-# get.state(c(6, 7), problem)
-# 
-# #fila 7
-# get.state(c(7, 1), problem)
-# get.state(c(7, 2), problem)
-# get.state(c(7, 3), problem)
-# get.state(c(7, 4), problem)
-# get.state(c(7, 5), problem)
-# get.state(c(7, 6), problem)
-# get.state(c(7, 7), problem)
-
-
-
-# state = c(1,1)
-# get.state(c(state[1],state[2]+1),problem)
-
 
 # state = c(1,2)
 # get.state(state,problem)
@@ -111,7 +40,7 @@ is.applicable <- function (state, action, problem) {
   # action = "Up"
   
   if (action == "Up") {
-    condicion1 <- 0 < state[1]-1 #filas - comprobacion de que no esta en el tope de arriba
+    condicion1 <- 0 < state[1]-1 #columnas - comprobacion de que no esta en el tope de arriba
     if (!condicion1) return(F)
     condicion2 <- get.state(state,problem) != get.state(c(state[1]-1,state[2]),problem)  #leer posición en el table
     if (condicion2) return(T)
@@ -137,8 +66,9 @@ is.applicable <- function (state, action, problem) {
     if (condicion2) return(T)
   }
   
-  state = c(7,1)
-  #action = "Right"
+  # state = c(7,7)
+  # action = "Right"
+  
   if (action == "Right") {
     condicion1 <- problem$size[2] > state[2]+1 #comprobacion de que no esta en el tope de la derecha
     if (!condicion1) return(F)

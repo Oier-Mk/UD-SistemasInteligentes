@@ -5,6 +5,7 @@ graphics.off()
 # Set working directory
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
+
 #Import the libraries needed to display the results
 library(kableExtra)
 library(magrittr)
@@ -22,18 +23,20 @@ source("../algorithms/results-analysis/analyze-results.R")
 source("../problem/Laberinto.R")
 problem <- initialize.problem("../data/feet-maze-1a.txt")
 
-v <- problem$state_initial #c(1,1)
+v <- problem$state_initial 
+# v = c(1, 1)
 is.applicable(v,"Up",problem)
 is.applicable(v,"Down",problem)
 is.applicable(v,"Left",problem)
 is.applicable(v,"Right",problem)
 
-bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
+# bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
 
 
 
 bfs_ts <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000)
 bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
+
 dfs_ts <- depth.first.search(problem, max_iterations = 2500, count_print = 1000)
 dfs_gs <- depth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
 dls6_ts <- depth.limited.search(problem, depth_limit = 6, max_iterations = 2500, count_print = 1000)
