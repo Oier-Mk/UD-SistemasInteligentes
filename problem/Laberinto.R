@@ -27,7 +27,7 @@ get.state <- function(coordenadas, problem){
   # print(coordenadas[1])
   # print(coordenadas[2])
   #return(problem$table[coordenadas[2],coordenadas[1]])     #columna, fila
-  return(problem$table[coordenadas[1],coordenadas[2]]) #fila, columna - de izquierda a derecha y de arriba a abajo
+  return(problem$table[coordenadas[1],coordenadas[2]])      #fila, columna - se lee la matriz de izquierda a derecha y de arriba a abajo
 }
 
 #fila 1
@@ -111,9 +111,13 @@ is.applicable <- function (state, action, problem) {
   # action = "Up"
   
   if (action == "Up") {
-    condicion1 <- 0 < state[1]-1 #filas - comprobacion de que no esta en el tope de arriba
-    if (!condicion1) return(F)
-    condicion2 <- get.state(state,problem) != get.state(c(state[1]-1,state[2]),problem)  #leer posición en el table
+    condicion1 <- 0 < state[1]-1 #filas - comprobación de que no esta en el tope de arriba
+    #Se compara con el 0 porque, al empezar por la esquina izquierda superior, al ejecutar UP te posicionarías en X=0 y 0 indica out of bounds.
+    #state[1] indica posición x actual y -1 el movimiento que se va a realizar con respecto de la coordenada X.
+    #Se comprueba si se puede accionar UP (si no estás en la fila 1 y tienes margen de maniobra)
+    
+    if (!condicion1) return(F)  #Si no hay margen de maniobra
+    condicion2 <- get.state(state,problem) != get.state(c(state[1]-1,state[2]),problem)  #Si es posible ejecutar UP, devuelve TRUE si finalmente se lleva a cabo (posición inicial y después de ejecución resultan distintas)
     if (condicion2) return(T)
   }
   
@@ -121,8 +125,8 @@ is.applicable <- function (state, action, problem) {
   # action = "Down"
   
   if (action == "Down") {
-    condicion1 <- problem$size[1] > state[1]+1 #comprobacion de que no esta en el tope de abajo
-    if (!condicion1) return(F)
+    condicion1 <- problem$size[1] > state[1]+1 #filas - comprobación de que no está en el tope de abajo - tamaño de la matriz vs posición en X + 1 (alcance que se espera obtener después de ejecutar la acción)
+    if (!condicion1) return(F)  #Si no hay margen de maniobra
     condicion2 <- get.state(state,problem) != get.state(c(state[1]+1,state[2]),problem)
     if (condicion2) return(T)  
   }
@@ -131,7 +135,7 @@ is.applicable <- function (state, action, problem) {
   # action = "Left"
   
   if (action == "Left") {
-    condicion1 <- 0 < state[2]-1 #comprobacion de que no esta en el tope de la izquierda
+    condicion1 <- 0 < state[2]-1 #columnas - comprobación de que no está en el tope de la izquierda - 0 (tope eje Y - 1) vs posición en Y - 1 (alcance que se espera obtener después de ejecutar la acción)
     if (!condicion1) return(F)
     condicion2 <- get.state(state,problem) != get.state(c(state[1],state[2]-1),problem)
     if (condicion2) return(T)
@@ -140,7 +144,7 @@ is.applicable <- function (state, action, problem) {
   state = c(7,1)
   #action = "Right"
   if (action == "Right") {
-    condicion1 <- problem$size[2] > state[2]+1 #comprobacion de que no esta en el tope de la derecha
+    condicion1 <- problem$size[2] > state[2]+1 #columnas - comprobación de que no está en el tope de la derecha - tamaño de la matriz en eje Y vs posición en Y + 1 (alcance que se espera obtener después de ejecutar la acción)
     if (!condicion1) return(F)
     condicion2 <- get.state(state,problem) != get.state(c(state[1],state[2]+1),problem)
     if (condicion2) return(T)
