@@ -11,7 +11,7 @@
 # (Depending on the problem, it should receive or not parameters)
 initialize.problem <- function(file) {
   problem <- list() # Default xvalue is an empty list.
-  file = "/Users/aidagomezbuenoberezo/Documents/sinteligentes/data/feet-maze-1a.txt"
+  file = "../data/feet-maze-1a.txt"
   # This attributes are compulsory
   problem$name                <- paste0("Laberinto - [", file, "]")
   problem$size                <- c(as.integer(read.csv(file, sep=";", header = FALSE, nrows=1)[1]),as.integer(read.csv(file, sep=";", header = FALSE, nrows=1)[2]))

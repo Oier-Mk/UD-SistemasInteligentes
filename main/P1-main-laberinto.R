@@ -24,7 +24,7 @@ source("../problem/Laberinto.R")
 problem <- initialize.problem("../data/feet-maze-1a.txt")
 
 v <- problem$state_initial 
-# v = c(1, 1)
+#Se empieza en la esquina izquierda inferior, abajo a la izquierda.
 is.applicable(v,"Up",problem)
 is.applicable(v,"Down",problem)
 is.applicable(v,"Left",problem)
