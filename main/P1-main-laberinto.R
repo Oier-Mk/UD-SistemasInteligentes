@@ -21,36 +21,9 @@ source("../algorithms/blind/iterative-deepening-search.R")
 source("../algorithms/results-analysis/analyze-results.R")
 
 source("../problem/Laberinto.R")
-problem <- initialize.problem("../data/feet-maze-1a.txt")
+problem <- initialize.problem("/Users/mentxaka/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/feet-maze-1b.txt")
 
-v <- problem$state_initial
-
-v <- c(1,1)
-#Se empieza en la esquina izquierda inferior, abajo a la izquierda.
-is.applicable(v,"Up",problem)
-is.applicable(v,"Down",problem)
-is.applicable(v,"Left",problem)
-is.applicable(v,"Right",problem)
-v <- c(7,1)
-#Se empieza en la esquina izquierda inferior, abajo a la izquierda.
-is.applicable(v,"Up",problem)
-is.applicable(v,"Down",problem)
-is.applicable(v,"Left",problem)
-is.applicable(v,"Right",problem)
-v <- c(1,7)
-#Se empieza en la esquina izquierda inferior, abajo a la izquierda.
-is.applicable(v,"Up",problem)
-is.applicable(v,"Down",problem)
-is.applicable(v,"Left",problem)
-is.applicable(v,"Right",problem)
-v <- c(7,7)
-#Se empieza en la esquina izquierda inferior, abajo a la izquierda.
-is.applicable(v,"Up",problem)
-is.applicable(v,"Down",problem)
-is.applicable(v,"Left",problem)
-is.applicable(v,"Right",problem)
-
-bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
+#bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
 
 
 
@@ -59,16 +32,15 @@ bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 100
 
 dfs_ts <- depth.first.search(problem, max_iterations = 2500, count_print = 1000)
 dfs_gs <- depth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
+
 dls6_ts <- depth.limited.search(problem, depth_limit = 6, max_iterations = 2500, count_print = 1000)
 dls6_gs <- depth.limited.search(problem, depth_limit = 6, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
+
 dls10_ts <- depth.limited.search(problem, depth_limit = 49, max_iterations = 2500, count_print = 1000)
 dls10_gs <- depth.limited.search(problem, depth_limit = 49, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
+
 ids_ts <- iterative.deepening.search(problem, max_iterations = 2500, count_print = 1000)
 ids_gs <- iterative.deepening.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
-# ucs_ts <- uniform.cost.search(problem, max_iterations = 2500, count_print = 1000)
-# ucs_gs <- uniform.cost.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
-# bfs_ts <- greedy.best.first.search(problem, max_iterations = 2500, count_print = 1000)
-# bfs_gs <- greedy.best.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
 
 # Analyze the result of all the executions
 results <- analyze.results(list(bfs_ts, bfs_gs,
