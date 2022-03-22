@@ -21,11 +21,7 @@ source("../algorithms/blind/iterative-deepening-search.R")
 source("../algorithms/results-analysis/analyze-results.R")
 
 source("../problem/Laberinto.R")
-problem <- initialize.problem("/Users/mentxaka/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/feet-maze-1b.txt")
-
-#bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
-
-
+problem <- initialize.problem("/Users/mentxaka/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/feet-maze-2a.txt")
 
 bfs_ts <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000)
 bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)
@@ -48,5 +44,7 @@ results <- analyze.results(list(bfs_ts, bfs_gs,
                                 dls6_ts, dls6_gs,
                                 dls10_ts, dls10_gs,
                                 ids_ts, ids_gs), problem)
+
 # Print results in an HTML Table
 kable_material(kbl(results, caption = "Laberinto"), c("striped", "hover"))
+
