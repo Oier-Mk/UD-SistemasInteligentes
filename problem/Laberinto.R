@@ -21,8 +21,8 @@ initialize.problem <- function(file) {
   problem$actions_possible    <- data.frame(direction = c("Up", "Down", "Left", "Right"), stringsAsFactors = FALSE)
   problem$left                <- read.csv(file, sep=";", header = FALSE, skip=3+problem$size[1], nrows=1)
   problem$right               <- read.csv(file, sep=";", header = FALSE, skip=4+problem$size[1], nrows=1)
-  problem$up                  <- read.csv(file, sep=";", header = FALSE, skip=5+problem$size[1], nrows=1)
-  problem$down                <- read.csv(file, sep=";", header = FALSE, skip=6+problem$size[1], nrows=1)
+  problem$down                  <- read.csv(file, sep=";", header = FALSE, skip=5+problem$size[1], nrows=1)
+  problem$up                <- read.csv(file, sep=";", header = FALSE, skip=6+problem$size[1], nrows=1)
 
   return(problem)
     
@@ -32,11 +32,10 @@ get.state <- function(coordenadas, problem){
   return(problem$table[coordenadas[1],coordenadas[2]])      #fila, columna - se lee la matriz de izquierda a derecha y de arriba a abajo
 }
 
-transform.state <- function(state){
-  #De c(x,y) -> "x,y"
-  value <- c(state[2]-1,state[1]-1)
-  result <- toString(value)
-  result <- gsub(" ", "", result) 
+transform.state <- function(state,problem){
+  value <- c(state[2]-1,state[1]-1)  
+  result <- toString(value)         #De c(x,y) -> "x, y"
+  result <- gsub(" ", "", result)   #De "x, y" -> "x,y"
   return(result)
 }
 
@@ -54,7 +53,7 @@ is.applicable <- function (state, action, problem) {
     if (!condicion1) return(F)  #Si no hay margen de maniobra
     
     #"x,y" %in% dataframe
-    condicion2 <- transform.state(state) %in% problem$up
+    condicion2 <- transform.state(state,problem) %in% problem$up
     # print(condicion2)
     if (condicion2) return(F)
     
@@ -67,7 +66,7 @@ is.applicable <- function (state, action, problem) {
     if (!condicion1) return(F)  #Si no hay margen de maniobra
     
     #"x,y" %in% dataframe
-    condicion2 <- transform.state(state) %in% problem$down
+    condicion2 <- transform.state(state,problem) %in% problem$down
     # print(condicion2)
     if (condicion2) return(F)
     
@@ -81,7 +80,7 @@ is.applicable <- function (state, action, problem) {
     if (!condicion1) return(F)
     
     #"x,y" %in% dataframe
-    condicion2 <- transform.state(state) %in% problem$left
+    condicion2 <- transform.state(state,problem) %in% problem$left
     # print(condicion2)
     if (condicion2) return(F)
     
@@ -89,12 +88,12 @@ is.applicable <- function (state, action, problem) {
     if (condicion3) return(T)
   }
   
-   if (action == "Right") {
+  if (action == "Right") {
     condicion1 <- problem$size[2] > state[2] #columnas - comprobación de que no está en el tope de la derecha - tamaño de la matriz en eje Y vs posición en Y + 1 (alcance que se espera obtener después de ejecutar la acción)
     if (!condicion1) return(F)
     
     #"x,y" %in% dataframe
-    condicion2 <- transform.state(state) %in% problem$right
+    condicion2 <- transform.state(state,problem) %in% problem$right
     # print(condicion2)
     if (condicion2) return(F)
     
