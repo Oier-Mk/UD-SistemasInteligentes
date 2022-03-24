@@ -10,8 +10,9 @@
 # This function must return a list with the information needed to solve the problem.
 # (Depending on the problem, it should receive or not parameters)
 initialize.problem <- function(file) {
+  
   problem <- list() # Default xvalue is an empty list.
-  # file = "/Users/mentxaka/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/feet-maze-1b.txt"
+
   # This attributes are compulsory
   problem$name                <- paste0("Laberinto - [", file, "]")
   problem$size                <- c(as.integer(read.csv(file, sep=";", header = FALSE, nrows=1)[1]),as.integer(read.csv(file, sep=";", header = FALSE, nrows=1)[2]))
@@ -21,8 +22,8 @@ initialize.problem <- function(file) {
   problem$actions_possible    <- data.frame(direction = c("Up", "Down", "Left", "Right"), stringsAsFactors = FALSE)
   problem$left                <- read.csv(file, sep=";", header = FALSE, skip=3+problem$size[1], nrows=1)
   problem$right               <- read.csv(file, sep=";", header = FALSE, skip=4+problem$size[1], nrows=1)
-  problem$down                  <- read.csv(file, sep=";", header = FALSE, skip=5+problem$size[1], nrows=1)
-  problem$up                <- read.csv(file, sep=";", header = FALSE, skip=6+problem$size[1], nrows=1)
+  problem$down                <- read.csv(file, sep=";", header = FALSE, skip=5+problem$size[1], nrows=1)
+  problem$up                  <- read.csv(file, sep=";", header = FALSE, skip=6+problem$size[1], nrows=1)
 
   return(problem)
     
@@ -54,11 +55,13 @@ is.applicable <- function (state, action, problem) {
     
     #"x,y" %in% dataframe
     condicion2 <- transform.state(state,problem) %in% problem$up
-    # print(condicion2)
     if (condicion2) return(F)
     
-    condicion3 <- get.state(state,problem) != get.state(c(state[1]-1,state[2]),problem)  #Si es posible ejecutar UP, devuelve TRUE si finalmente se lleva a cabo (posición inicial y después de ejecución resultan distintas)
-    if (condicion3) return(T)
+    condicion3 <- transform.state(c(state[1],state[2]+1),problem) %in% problem$down
+    if (condicion2) return(F)
+    
+    condicion4 <- get.state(state,problem) != get.state(c(state[1]-1,state[2]),problem)  #Si es posible ejecutar UP, devuelve TRUE si finalmente se lleva a cabo (posición inicial y después de ejecución resultan distintas)
+    if (condicion4) return(T)
   }
  
   if (action == "Down") {
@@ -67,11 +70,13 @@ is.applicable <- function (state, action, problem) {
     
     #"x,y" %in% dataframe
     condicion2 <- transform.state(state,problem) %in% problem$down
-    # print(condicion2)
     if (condicion2) return(F)
     
-    condicion3 <- get.state(state,problem) != get.state(c(state[1]+1,state[2]),problem)
-    if (condicion3) return(T)  
+    condicion3 <- transform.state(c(state[1],state[2]-1),problem) %in% problem$up
+    if (condicion2) return(F)
+    
+    condicion4 <- get.state(state,problem) != get.state(c(state[1]+1,state[2]),problem)
+    if (condicion4) return(T)  
   }
   
  
@@ -81,11 +86,13 @@ is.applicable <- function (state, action, problem) {
     
     #"x,y" %in% dataframe
     condicion2 <- transform.state(state,problem) %in% problem$left
-    # print(condicion2)
     if (condicion2) return(F)
     
-    condicion3 <- get.state(state,problem) != get.state(c(state[1],state[2]-1),problem)
-    if (condicion3) return(T)
+    condicion3 <- transform.state(c(state[1]-1,state[2]),problem) %in% problem$right
+    if (condicion2) return(F)
+    
+    condicion4 <- get.state(state,problem) != get.state(c(state[1],state[2]-1),problem)
+    if (condicion4) return(T)
   }
   
   if (action == "Right") {
@@ -94,11 +101,13 @@ is.applicable <- function (state, action, problem) {
     
     #"x,y" %in% dataframe
     condicion2 <- transform.state(state,problem) %in% problem$right
-    # print(condicion2)
     if (condicion2) return(F)
     
-    condicion3 <- get.state(state,problem) != get.state(c(state[1],state[2]+1),problem)
-    if (condicion3) return(T)
+    condicion3 <- transform.state(c(state[1]+1,state[2]),problem) %in% problem$left
+    if (condicion2) return(F)
+    
+    condicion4 <- get.state(state,problem) != get.state(c(state[1],state[2]+1),problem)
+    if (condicion4) return(T)
   }
   return(result)
 }
