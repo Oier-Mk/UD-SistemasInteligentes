@@ -21,7 +21,7 @@ source("../algorithms/blind/iterative-deepening-search.R")
 source("../algorithms/results-analysis/analyze-results.R")
 
 source("../problem/Laberinto.R")
-problem <- initialize.problem("/Users/mentxaka/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/feet-maze-3b.txt")
+problem <- initialize.problem("/Users/mentxaka/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/feet-maze-1b.txt")
 
 bfs_ts <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000)
 bfs_gs <- breadth.first.search(problem, max_iterations = 2500, count_print = 1000, graph_search = TRUE)

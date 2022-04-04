@@ -11,14 +11,19 @@
 # (Depending on the problem, it should receive or not parameters)
 initialize.problem <- function(file) {
   
+  #file = "/Users/mentxaka/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/feet-maze-3b.txt"
+  
   problem <- list() # Default xvalue is an empty list.
 
   # This attributes are compulsory
   problem$name                <- paste0("Laberinto - [", file, "]")
-  problem$size                <- c(as.integer(read.csv(file, sep=";", header = FALSE, nrows=1)[1]),as.integer(read.csv(file, sep=";", header = FALSE, nrows=1)[2]))
+  lectura                     <- read.csv(file, sep=";", header = FALSE, nrows=1)
+  problem$size                <- c(as.integer(lectura[1]),as.integer(lectura[2]))
   problem$table               <- read.csv(file, sep=";", header = FALSE, skip=1, nrows=problem$size[1])
-  problem$state_initial       <- c(as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=1+problem$size[1], nrows=1), 3,3))+1,as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=1+problem$size[1], nrows=1), 1,1))+1)
-  problem$state_final         <- c(as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=2+problem$size[1], nrows=1), 3,3))+1,as.integer(substr(read.csv(file, sep=";", header = FALSE, skip=2+problem$size[1], nrows=1), 1,1))+1)
+  lectura                     <- read.csv(file, sep=";", header = FALSE, skip=1+problem$size[1], nrows=1)
+  problem$state_initial       <- c(as.integer(substr(lectura, 3,3))+1,as.integer(substr(lectura,1,1))+1)
+  lectura                     <- read.csv(file, sep=";", header = FALSE, skip=2+problem$size[1], nrows=1)
+  problem$state_final         <- c(as.integer(substr(lectura, 3,3))+1,as.integer(substr(lectura,1,1))+1)
   problem$actions_possible    <- data.frame(direction = c("Up", "Down", "Left", "Right"), stringsAsFactors = FALSE)
   problem$left                <- read.csv(file, sep=";", header = FALSE, skip=3+problem$size[1], nrows=1)
   problem$right               <- read.csv(file, sep=";", header = FALSE, skip=4+problem$size[1], nrows=1)
