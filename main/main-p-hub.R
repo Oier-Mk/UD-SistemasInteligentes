@@ -29,11 +29,12 @@ execute.hill.climbing <- function(filename, p) {
 }
 
 # Executes hill climbing search and return the results
-execute.random.restart.hill.climbing <- function(filename, p) {
+execute.random.restart.hill.climbing <- function(filename, p, iterations) {
   # Initialize problem
-  problem <- initialize.problem(p = p, filename = filename)
+  # problem <- initialize.problem(p = p, filename = filename)
   # Execute hill climbing
-  return(random.restart.hill.climbing.search(problem = problem))
+  
+  return(random.restart.hill.climbing.search(filename, p, iterations))
 }
 
 # Execute Hill Climbing several times and analyze results
@@ -41,10 +42,11 @@ test.random.restart.hill.climbing <- function(file, p, times) {
   # Execute hill climbing 'n' times
   results <- vector(mode = "list", length = times)
   
-  for (i in 1:times) {
-    results[[i]] <- execute.hill.climbing(filename = file, p = p)
-  }
-  
+  # for (i in 1:times) {
+  #   
+  # }
+  results <- execute.random.restart.hill.climbing(filename = file, p = p, iterations = times)
+  # print(results)
   # Initialize a problem instance for the analysis
   problem <- initialize.problem(filename = file, p = p)
   
@@ -90,19 +92,19 @@ test.hill.climbing <- function(file, p, times) {
 cat("\014")
 graphics.off()
 
-file        <- "../data/p-hub/AP40.txt"
-p           <- 4
-times       <- 10
-results_df  <- test.hill.climbing(file, p, times)
-# Print results in an HTML Table
-kable_material(kbl(results_df, caption = "p-hub AP40"),  c("striped", "hover", "condensed", "responsive"))
-
-file        <- "../data/p-hub/AP100.txt"
-p           <- 3
-times       <- 10
-results_df  <- test.hill.climbing(file, p, times)
-# Print results in an HTML Table
-kable_material(kbl(results_df, caption = "p-hub AP100"),  c("striped", "hover", "condensed", "responsive"))
+# file        <- "../data/p-hub/AP40.txt"
+# p           <- 4
+# times       <- 10
+# results_df  <- test.hill.climbing(file, p, times)
+# # Print results in an HTML Table
+# kable_material(kbl(results_df, caption = "p-hub AP40"),  c("striped", "hover", "condensed", "responsive"))
+# 
+# file        <- "../data/p-hub/AP100.txt"
+# p           <- 3
+# times       <- 10
+# results_df  <- test.hill.climbing(file, p, times)
+# # Print results in an HTML Table
+# kable_material(kbl(results_df, caption = "p-hub AP100"),  c("striped", "hover", "condensed", "responsive"))
 
 
 file        <- "../data/p-hub/AP100.txt"

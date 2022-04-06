@@ -106,13 +106,13 @@ random.restart.hill.climbing.search = function(file,
                                                 p,
                                                 iterations ) { #iterations - número de veces que se repite el hill climbing search
   
-  
+  i = 1
   # TO - DO. implementación de la llamada
   while(i<iterations){
-    iterations++
+    i = i+1
     state_initial    <- initialize.problem(file,p)     
     result           <- hill.climbing.search(state_initial, 100, 100, FALSE)
   }
-  
+  print(result)
   return(result)
 }
