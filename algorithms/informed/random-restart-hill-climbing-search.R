@@ -102,48 +102,17 @@ hill.climbing.search = function(problem,
 }
 
 
-random.restart.hill.climbing.search = function(problem,
-                                max_iterations = 1000, 
-                                count_print = 100, 
-                                trace = FALSE, 
-                                # file, 
-                                # p, 
-                                # iterations
-                                ) { #iterations - número de veces que se repite el hill climbing search
+random.restart.hill.climbing.search = function(file,
+                                                p,
+                                                iterations ) { #iterations - número de veces que se repite el hill climbing search
   
-  name_method      <- paste0("Random Restart Hill Climbing Search")
-  actions_possible <- problem$actions_possible
-  
-  # Get Start time
-  start_time       <- Sys.time()
   
   # TO - DO. implementación de la llamada
   while(i<iterations){
     iterations++
-    state_initial    <- problem$state_initial#TODO CAMBIAR RANDOM EL PROBLEMA
-    hill.climbing.search(problem, max_iterations, count_print, trace)
-    
-    
+    state_initial    <- initialize.problem(file,p)     
+    result           <- hill.climbing.search(state_initial, 100, 100, FALSE)
   }
-  
-  # Get runtime
-  end_time <- Sys.time()
-  
-  result <- list()
-  result$name    <- name_method
-  result$runtime <- end_time - start_time
-  
-  # Print final result
-  if (end_reason == "Local_Best") {
-    print("Local best found!!", quote = FALSE)
-  } else {
-    print("Maximum iterations reached", quote = FALSE)
-  }
-  
-  print(to.string(state = node_current$state, problem = problem))
-  
-  result$state_final <- node_current
-  result$report      <- report
   
   return(result)
 }
