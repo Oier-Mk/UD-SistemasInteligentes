@@ -101,18 +101,28 @@ hill.climbing.search = function(problem,
   return(result)
 }
 
-random.restart.hill.climbing.search = function(file,
-                                               p,
-                                               max_iterations = 1000) {
+
+random.restart.hill.climbing.search = function(problem,
+                                max_iterations = 1000, 
+                                count_print = 100, 
+                                trace = FALSE, 
+                                # file, 
+                                # p, 
+                                # iterations
+                                ) { #iterations - número de veces que se repite el hill climbing search
   
   name_method      <- paste0("Random Restart Hill Climbing Search")
-  state_initial    <- problem$state_initial
   actions_possible <- problem$actions_possible
   
   # Get Start time
   start_time       <- Sys.time()
   
-  for(int i = 0; i<p; i++){
+  # TO - DO. implementación de la llamada
+  while(i<iterations){
+    iterations++
+    state_initial    <- problem$state_initial#TODO CAMBIAR RANDOM EL PROBLEMA
+    hill.climbing.search(problem, max_iterations, count_print, trace)
+    
     
   }
   
