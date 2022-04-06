@@ -46,20 +46,20 @@ test.random.restart.hill.climbing <- function(file, p, times) {
   #   
   # }
   results <- execute.random.restart.hill.climbing(filename = file, p = p, iterations = times)
-  # print(results)
+  print(results)
   # Initialize a problem instance for the analysis
   problem <- initialize.problem(filename = file, p = p)
   
   # Analyze results
   results_df <- local.analyze.results(results, problem)
   
-  print(paste0("Best evaluation: ", round(min(results_df$Evaluation), 2), 
-               " - Mean: ", round(mean(results_df$Evaluation), 2), 
+  print(paste0("Best evaluation: ", round(min(results_df$Evaluation), 2),
+               " - Mean: ", round(mean(results_df$Evaluation), 2),
                " - SD: ", round(sd(results_df$Evaluation), 2)), quote = FALSE)
-  print(paste0("Best runtime: ", round(min(results_df$Runtime), 2), 
-               " - Mean: ", round(mean(results_df$Runtime), 2), 
+  print(paste0("Best runtime: ", round(min(results_df$Runtime), 2),
+               " - Mean: ", round(mean(results_df$Runtime), 2),
                " - SD: ", round(sd(results_df$Runtime), 2)), quote = FALSE)
-  
+
   return(results_df)
 }
 
@@ -98,7 +98,7 @@ graphics.off()
 # results_df  <- test.hill.climbing(file, p, times)
 # # Print results in an HTML Table
 # kable_material(kbl(results_df, caption = "p-hub AP40"),  c("striped", "hover", "condensed", "responsive"))
-# 
+
 # file        <- "../data/p-hub/AP100.txt"
 # p           <- 3
 # times       <- 10
