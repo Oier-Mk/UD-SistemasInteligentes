@@ -21,26 +21,56 @@ source("../algorithms/results-analysis/analyze-results.R")
 source("../problem/p-hub-problem.R")
 
 
-# Executes hill climbing search and return the results
-execute.random.restart.hill.climbing <- function(filename, p, iterations) {
-  # Initialize problem
-  # problem <- initialize.problem(p = p, filename = filename)
-  # Execute hill climbing
-  return(random.restart.hill.climbing.search(filename, p, iterations))
-}
+# # Executes hill climbing search and return the results
+# execute.random.restart.hill.climbing <- function(filename, p, iterations) {
+#   # Initialize problem
+#   # problem <- initialize.problem(p = p, filename = filename)
+#   # Execute hill climbing
+#   return(random.restart.hill.climbing.search(filename, p, iterations))
+# }
+# 
+# # Execute Hill Climbing several times and analyze results
+# test.random.restart.hill.climbing <- function(file, p, times) {
+#   # Execute hill climbing 'n' times
+#   results <- vector(mode = "list", length = times)
+#   results <- execute.random.restart.hill.climbing(filename = file, p = p, iterations = times)
+#   print(results)
+#   # Initialize a problem instance for the analysis
+#   problem <- initialize.problem(filename = file, p = p)
+#   
+#   # Analyze results
+#   results_df <- local.analyze.results(results, problem)
+#   
+#   print(paste0("Best evaluation: ", round(min(results_df$Evaluation), 2),
+#                " - Mean: ", round(mean(results_df$Evaluation), 2),
+#                " - SD: ", round(sd(results_df$Evaluation), 2)), quote = FALSE)
+#   print(paste0("Best runtime: ", round(min(results_df$Runtime), 2),
+#                " - Mean: ", round(mean(results_df$Runtime), 2),
+#                " - SD: ", round(sd(results_df$Runtime), 2)), quote = FALSE)
+# 
+#   return(results_df)
+# }
 
-# Execute Hill Climbing several times and analyze results
-test.random.restart.hill.climbing <- function(file, p, times) {
+# Executes hill climbing search and return the results
+execute.rr.hill.climbing <- function(filename, p, times) {
+  
+  # filename        <- "/Users/mentxaka/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/p-hub/AP100.txt"
+  # p           <- 3
+  # times       <- 10
+  
+  # Initialize problem
   # Execute hill climbing 'n' times
   results <- vector(mode = "list", length = times)
-  results <- execute.random.restart.hill.climbing(filename = file, p = p, iterations = times)
-  print(results)
-  # Initialize a problem instance for the analysis
-  problem <- initialize.problem(filename = file, p = p)
+  problems <- vector(mode = "list", length = times)
+  for (i in 1:times) {
+    problems[[i]] <- initialize.problem(filename, p)
+    results[[i]] <- hill.climbing.search(problems[[i]])
+  }
   
   # Analyze results
-  results_df <- local.analyze.results(results, problem)
   
+  results_df <- one.by.one.analyze.results(results, problems)
+
   print(paste0("Best evaluation: ", round(min(results_df$Evaluation), 2),
                " - Mean: ", round(mean(results_df$Evaluation), 2),
                " - SD: ", round(sd(results_df$Evaluation), 2)), quote = FALSE)
@@ -106,7 +136,7 @@ graphics.off()
 file        <- "../data/p-hub/AP100.txt"
 p           <- 3
 times       <- 10
-results_df  <- test.random.restart.hill.climbing(file, p, times)
+results_df  <- execute.rr.hill.climbing(file,p,times) #test.random.restart.hill.climbing(file, p, times)
 print("sale de la funcion")
 # Print results in an HTML Table
 kable_material(kbl(results_df, caption = "p-hub AP100"),  c("striped", "hover", "condensed", "responsive"))

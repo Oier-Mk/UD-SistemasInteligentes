@@ -46,3 +46,20 @@ local.analyze.results <- function(results, problem) {
    
   return(analyzed_results)
 }
+
+one.by.one.analyze.results <- function(results, problems) {
+  analyzed_results <- data.frame()
+  
+  for (i in 1:length(results)) {
+    result <- results[[i]]
+    problem <- problems[[i]]
+    analyzed_results <- rbind(analyzed_results, data.frame(Name = result$name,
+                                                           Initial_State = to.string(problem$state_initial, problem),
+                                                           Final_State = to.string(result$state_final$state, problem),
+                                                           Evaluation = get.evaluation(state = result$state_final$state, problem = problem),
+                                                           Iterations = length(result$report$iteration),
+                                                           Runtime = round(result$runtime, digits = 2)))
+  }
+  
+  return(analyzed_results)
+}
