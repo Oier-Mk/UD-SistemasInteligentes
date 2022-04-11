@@ -12,7 +12,7 @@ library(magrittr)
 # Include algorithm functions
 source("../algorithms/blind/expand-node.R")
 source("../algorithms/informed/hill-climbing-search.R")
-source("../algorithms/informed/random-restart-hill-climbing-search.R")
+source("../algorithms/informed/local-beam-search.R")
 
 # Include functions for data analysis and result plot
 source("../algorithms/results-analysis/analyze-results.R")
@@ -52,12 +52,8 @@ source("../problem/p-hub-problem.R")
 # }
 
 # Executes hill climbing search and return the results
-execute.rr.hill.climbing <- function(filename, p, times) {
-  
-  # filename        <- "/Users/mentxaka/Documents/Universidad De Deusto/2021-22/2do Semestre/Sistemas Inteligentes/data/p-hub/AP100.txt"
-  # p           <- 3
-  # times       <- 10
-  
+execute.random.restart.hill.climbing <- function(filename, p, times) {
+
   # Initialize problem
   # Execute hill climbing 'n' times
   results <- vector(mode = "list", length = times)
@@ -79,6 +75,11 @@ execute.rr.hill.climbing <- function(filename, p, times) {
                " - SD: ", round(sd(results_df$Runtime), 2)), quote = FALSE)
 
   return(results_df)
+}
+
+get.best.one <- function(results_df){
+  bestEvaluated <- results_df[order(results_df$Evaluation),]
+  return(bestEvaluated[1,])
 }
 
 # # Executes hill climbing search and return the results
@@ -133,11 +134,11 @@ graphics.off()
 # kable_material(kbl(results_df, caption = "p-hub AP100"),  c("striped", "hover", "condensed", "responsive"))
 
 
+
 file        <- "../data/p-hub/AP100.txt"
 p           <- 3
 times       <- 10
-results_df  <- execute.rr.hill.climbing(file,p,times) #test.random.restart.hill.climbing(file, p, times)
-print("sale de la funcion")
-# Print results in an HTML Table
-kable_material(kbl(results_df, caption = "p-hub AP100"),  c("striped", "hover", "condensed", "responsive"))
+results_df  <- execute.random.restart.hill.climbing(file,p,times) 
+get.best.one(results_df)
+kable_material(kbl(results_df, caption = "p-hub RR AP100"),  c("striped", "hover", "condensed", "responsive"))
 
