@@ -1,5 +1,5 @@
 local.beam.search = function(problem,beams,
-                                max_iterations = 100, 
+                                max_iterations = 1000, 
                                 count_print = 100, 
                                 trace = F) {
   
@@ -56,8 +56,7 @@ local.beam.search = function(problem,beams,
       sucessor_nodes <- sucessor_nodes[order(sapply(sucessor_nodes,function (x) x$evaluation))]
       
       # Select best successor
-      #append(beam_node_currents, sucessor_nodes[[1]])
-      
+
       node_best_successor <- sucessor_nodes[[1]]
     
       #print(node_best_successor$evaluation <= node_current$evaluation)
