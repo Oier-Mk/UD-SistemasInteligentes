@@ -12,7 +12,7 @@ library(magrittr)
 # Include algorithm functions
 source("../algorithms/blind/expand-node.R")
 source("../algorithms/informed/hill-climbing-search.R")
-source("../algorithms/informed/2-local-beam-search.R")
+source("../algorithms/informed/local-beam-search.R")
 
 # Include functions for data analysis and result plot
 source("../algorithms/results-analysis/analyze-results.R")
@@ -139,4 +139,4 @@ problem     <- initialize.problem(filename = file,p = p)
 beams       <- 3
 results_df  <- test.local.beam.search(problem, beams) 
 get.best.one(results_df)
-kable_material(kbl(results_df, caption = "p-hub BEAMS AP100"),  c("striped", "hover", "condensed", "responsive"))
+kable_material(kbl(results_dfs, caption = "p-hub BEAMS AP100"),  c("striped", "hover", "condensed", "responsive"))
