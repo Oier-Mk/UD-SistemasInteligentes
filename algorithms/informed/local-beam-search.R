@@ -1,9 +1,15 @@
-hill.climbing.search = function(problem,
+local.beam.search = function(problem,beams,
                                 max_iterations = 1000, 
                                 count_print = 100, 
                                 trace = FALSE) {
   
-  name_method      <- paste0("Hill Climbing Search")
+  
+  # file        <- "../data/p-hub/AP100.txt"
+  # p           <- 4
+  # problem     <- initialize.problem(file,p)
+  # beams       <- 3
+  
+  name_method      <- paste0("Local Beam Search")
   state_initial    <- problem$state_initial
   actions_possible <- problem$actions_possible
   
@@ -41,9 +47,17 @@ hill.climbing.search = function(problem,
     
     # Current node is expanded
     sucessor_nodes <- local.expand.node(node_current, actions_possible, problem)
+    
+    sucessor_expanded <- list()
+    for(i in 1:length(sucessor_nodes)){
+      newNodes <- local.expand.node(sucessor_nodes[[i]],actions_possible, problem)
+      append(sucessor_expanded, newNodes)
+    }
+     
     #TODO expandir todos y quedarte con los mejores por cada nodo los expandidos
+    
     # Successor nodes are sorted ascending order of the evaluation function
-    sucessor_nodes <- sucessor_nodes[order(sapply(sucessor_nodes,function (x) x$evaluation))]
+    sucessor_expanded <- sucessor_nodes[order(sapply(sucessor_nodes,function (x) x$evaluation))]
     
     # Select best successor
     node_best_successor <- sucessor_nodes[[1]]
@@ -101,3 +115,4 @@ hill.climbing.search = function(problem,
   
   return(result)
 }
+
