@@ -92,14 +92,14 @@ execute.local.beam.search <- function(problem) {
   # Execute local beam search
   return(local.beam.search(problem = problem))
 }
-test.local.beam.search <- function(filename, p, beams) {
+test.local.beam.search <- function(filename, p, beams, times) {
 
   results <- vector(mode = "list", length = beams)
   
   # Initialize a problem instance for the analysis
   problem <- initialize.problem(filename = filename, p = p)
   
-  for (i in 1:beams) {
+  for (i in 1:times) {
     results[[i]] <- execute.local.beam.search(problem)
   }
   
@@ -121,73 +121,58 @@ test.local.beam.search <- function(filename, p, beams) {
 cat("\014")
 graphics.off()
 
-file        <- "../data/p-hub/AP100.txt"
+file        <- "../data/p-hub/AP40.txt"
 p           <- 3
 times       <- 10
 results_df  <- test.hill.climbing(file, p, times)
 hc10        <- get.best.one(results_df)
-#kable_material(kbl(results_df, caption = "p-hub AP100"),  c("striped", "hover", "condensed", "responsive"))
-file        <- "../data/p-hub/AP100.txt"
+file        <- "../data/p-hub/AP40.txt"
 p           <- 3
 times       <- 20
 results_df  <- test.hill.climbing(file, p, times)
 hc20        <- get.best.one(results_df)
-#kable_material(kbl(results_df, caption = "p-hub AP100"),  c("striped", "hover", "condensed", "responsive"))
-file        <- "../data/p-hub/AP100.txt"
+file        <- "../data/p-hub/AP40.txt"
 p           <- 3
 times       <- 50
 results_df  <- test.hill.climbing(file, p, times)
 hc50        <- get.best.one(results_df)
-#kable_material(kbl(results_df, caption = "p-hub AP100"),  c("striped", "hover", "condensed", "responsive"))
 
 
-file        <- "../data/p-hub/AP100.txt"
+file        <- "../data/p-hub/AP40.txt"
 p           <- 3
 times       <- 10
 results_df  <- execute.random.restart.hill.climbing(file,p,times)
 rr10 <- get.best.one(results_df)
-#kable_material(kbl(results_df, caption = "p-hub RR AP100"),  c("striped", "hover", "condensed", "responsive"))
-file        <- "../data/p-hub/AP100.txt"
+file        <- "../data/p-hub/AP40.txt"
 p           <- 3
 times       <- 20
 results_df  <- execute.random.restart.hill.climbing(file,p,times)
 rr20 <- get.best.one(results_df)
-#kable_material(kbl(results_df, caption = "p-hub RR AP100"),  c("striped", "hover", "condensed", "responsive"))
-file        <- "../data/p-hub/AP100.txt"
+file        <- "../data/p-hub/AP40.txt"
 p           <- 3
 times       <- 50
 results_df  <- execute.random.restart.hill.climbing(file,p,times)
 rr50 <- get.best.one(results_df)
-#kable_material(kbl(results_df, caption = "p-hub RR AP100"),  c("striped", "hover", "condensed", "responsive"))
 
-file        <- "../data/p-hub/AP100.txt"
+file        <- "../data/p-hub/AP40.txt"
 p           <- 3
 beams       <- 3
-results_df  <- test.local.beam.search(file, p, beams) 
+times       <- 10
+results_df  <- test.local.beam.search(file, p, beams,times) 
 beams3      <- get.best.one(results_df)
-#kable_material(kbl(results_df, caption = "p-hub BEAMS AP100"),  c("striped", "hover", "condensed", "responsive"))
-file        <- "../data/p-hub/AP100.txt"
+file        <- "../data/p-hub/AP40.txt"
 p           <- 3
 beams       <- 5
-results_df  <- test.local.beam.search(file, p, beams) 
+times       <- 20
+results_df  <- test.local.beam.search(file, p, beams,times)
 beams5      <- get.best.one(results_df)
-#kable_material(kbl(results_df, caption = "p-hub BEAMS AP100"),  c("striped", "hover", "condensed", "responsive"))
-file        <- "../data/p-hub/AP100.txt"
+file        <- "../data/p-hub/AP40.txt"
 p           <- 3
 beams       <- 10
-results_df  <- test.local.beam.search(file, p, beams) 
+times       <- 50
+results_df  <- test.local.beam.search(file, p, beams,times)
 beams10     <- get.best.one(results_df)
-#kable_material(kbl(results_df, caption = "p-hub BEAMS AP100"),  c("striped", "hover", "condensed", "responsive"))
 
 result      <- rbind(hc10,hc20,hc50,rr10,rr20,rr50,beams3,beams5,beams10)
 
-# result      <- rbind(hc10,hc20)
-# result      <- rbind(result,hc50)
-# result      <- rbind(result,rr10)
-# result      <- rbind(result,rr20)
-# result      <- rbind(result,rr50)
-# result      <- rbind(result,beams3)
-# result      <- rbind(result,beams5)
-# result      <- rbind(result,beams10)
-
-kable_material(kbl(result, caption = "RESOULT p-hub AP100"),  c("striped", "hover", "condensed", "responsive"))
+kable_material(kbl(result, caption = "RESULT p-hub AP40"),  c("striped", "hover", "condensed", "responsive"))
