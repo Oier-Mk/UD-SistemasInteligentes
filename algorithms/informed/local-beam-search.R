@@ -1,4 +1,5 @@
-local.beam.search = function(problem, max_iterations = 1000, 
+local.beam.search = function(problem, 
+                                max_iterations = 1000, 
                                 count_print = 100, 
                                 trace = FALSE,
                                 beams = 3) {
@@ -48,8 +49,8 @@ local.beam.search = function(problem, max_iterations = 1000,
     }
   
     sucessor_nodes_beam <- list()
-    for (node in current_nodes){
-      sucessor_nodes <- local.expand.node(node, actions_possible, problem)
+    for (i in current_nodes){
+      sucessor_nodes <- local.expand.node(i, actions_possible, problem)
       sucessor_nodes_beam <- append(sucessor_nodes_beam, sucessor_nodes)
     }
     
@@ -59,7 +60,9 @@ local.beam.search = function(problem, max_iterations = 1000,
     
     current_nodes <- current_nodes[order(sapply(current_nodes,function (x) x$evaluation))]
     
-    if(sucessor_nodes_beam[[1]]$evaluation <= current_nodes[[1]]$evaluation){
+    bestNode <- sucessor_nodes_beam[[1]]
+    
+    if(bestNode$evaluation <= current_nodes[[1]]$evaluation){
       
       current_nodes <- sucessor_nodes_beam
       # If "trace" is on, the information of the new current node is displayed
@@ -83,7 +86,7 @@ local.beam.search = function(problem, max_iterations = 1000,
   # Get runtime
   end_time <- Sys.time()
   
-  result <- list()
+  result         <- list()
   result$name    <- name_method
   result$runtime <- end_time - start_time
   
