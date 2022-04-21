@@ -23,11 +23,12 @@ char2num<-function(x){
   as.numeric(factor(x, levels=groups))
 }
 
-data$name <- char2num(data$name)
-data$fuel <- char2num(data$fuel)
-data$seller_type <- char2num(data$seller_type)
-data$transmission <- char2num(data$transmission)
-data$owner <- char2num(data$owner)
+data$name <- NULL
+# data$name <- char2num(data$name)
+# data$fuel <- char2num(data$fuel)
+# data$seller_type <- char2num(data$seller_type)
+# data$transmission <- char2num(data$transmission)
+# data$owner <- char2num(data$owner)
 
 # Convert columns to factors
 index <- 1:ncol(data)
