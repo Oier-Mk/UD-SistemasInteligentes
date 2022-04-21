@@ -17,7 +17,6 @@ library(rpart.plot)
 # Read data from CSV
 data <- read.csv(file = "../data/CAR-DETAILS-FROM-CAR-DEKHO.csv", sep =",", header = TRUE)
 
-
 data$name <- NULL
 
 data$year[data$year <= 2000] <- "<= 2000"
@@ -26,8 +25,8 @@ data$year[data$year > 2005 & data$year <= 2010] <- "2005 < x <= 2010"
 data$year[data$year > 2010 & data$year <= 2015] <- "2010 < x <= 2015"
 data$year[data$year > 2015 & data$year <= 2020] <- "2015 < x <= 2020"
 
-data$selling_price[data$selling_price <= 50000] <- "<= 50000"
-data$selling_price[data$selling_price > 50000  & data$selling_price <= 100000] <- "50000 < x <= 100000"
+data$selling_price[data$selling_price <= 50000] <- "x <= 50000"
+data$selling_price[data$selling_price >  50000 & data$selling_price <= 100000] <- "50000  < x <= 100000"
 data$selling_price[data$selling_price > 100000 & data$selling_price <= 200000] <- "100000 < x <= 200000"
 data$selling_price[data$selling_price > 200000 & data$selling_price <= 300000] <- "200000 < x <= 300000"
 data$selling_price[data$selling_price > 300000 & data$selling_price <= 400000] <- "300000 < x <= 400000"
@@ -36,14 +35,13 @@ data$selling_price[data$selling_price > 500000 & data$selling_price <= 600000] <
 data$selling_price[data$selling_price > 600000] <- "x > 600000"
 data$selling_price <- NULL
 
-data$km_driven[data$km_driven <= 35000] <- "<= 35000"
+data$km_driven[data$km_driven <= 35000] <- "x <= 35000"
 data$km_driven[data$km_driven > 35000 & data$km_driven <= 50000] <- "35000 < x <= 50000"
 data$km_driven[data$km_driven > 50000 & data$km_driven <= 65000] <- "50000 < x <= 65000"
 data$km_driven[data$km_driven > 65000 & data$km_driven <= 80000] <- "65000 < x <= 80000"
 data$km_driven[data$km_driven > 80000 & data$km_driven <= 95000] <- "80000 < x <= 95000"
 data$km_driven[data$km_driven > 95000] <- "x > 95000"
 data$km_driven <- NULL
-
 
 # Convert columns to factors
 index <- 1:ncol(data)
@@ -99,7 +97,7 @@ rpart.plot(model,
            tweak = 1.1,
            box.palette = "GnYlRd",
            shadow.col = "darkgray",
-           main = "Go to hospital or stay at home?", 
+           main = "Dealer, indivudial or trustmark dealer?", 
            sub = accuracy)
 
 # Print the rules that represent the Decision Tree
