@@ -15,20 +15,35 @@ library(rpart)
 library(rpart.plot)
 
 # Read data from CSV
-filename = "../data/PRUEBAS-CAR-DETAILS-FROM-CAR-DEKHO.csv"
-data <- read.csv(file = filename, sep =",", header = TRUE)
+data <- read.csv(file = "../data/CAR-DETAILS-FROM-CAR-DEKHO.csv", sep =",", header = TRUE)
 
-char2num<-function(x){
-  groups = unique(x)
-  as.numeric(factor(x, levels=groups))
-}
 
 data$name <- NULL
-# data$name <- char2num(data$name)
-# data$fuel <- char2num(data$fuel)
-# data$seller_type <- char2num(data$seller_type)
-# data$transmission <- char2num(data$transmission)
-# data$owner <- char2num(data$owner)
+
+data$year[data$year <= 2000] <- "<= 2000"
+data$year[data$year > 2000 & data$year <= 2005] <- "2000 < x <= 2005"
+data$year[data$year > 2005 & data$year <= 2010] <- "2005 < x <= 2010"
+data$year[data$year > 2010 & data$year <= 2015] <- "2010 < x <= 2015"
+data$year[data$year > 2015 & data$year <= 2020] <- "2015 < x <= 2020"
+
+data$selling_price[data$selling_price <= 50000] <- "<= 50000"
+data$selling_price[data$selling_price > 50000  & data$selling_price <= 100000] <- "50000 < x <= 100000"
+data$selling_price[data$selling_price > 100000 & data$selling_price <= 200000] <- "100000 < x <= 200000"
+data$selling_price[data$selling_price > 200000 & data$selling_price <= 300000] <- "200000 < x <= 300000"
+data$selling_price[data$selling_price > 300000 & data$selling_price <= 400000] <- "300000 < x <= 400000"
+data$selling_price[data$selling_price > 400000 & data$selling_price <= 500000] <- "400000 < x <= 500000"
+data$selling_price[data$selling_price > 500000 & data$selling_price <= 600000] <- "500000 < x <= 600000"
+data$selling_price[data$selling_price > 600000] <- "x > 600000"
+data$selling_price <- NULL
+
+data$km_driven[data$km_driven <= 35000] <- "<= 35000"
+data$km_driven[data$km_driven > 35000 & data$km_driven <= 50000] <- "35000 < x <= 50000"
+data$km_driven[data$km_driven > 50000 & data$km_driven <= 65000] <- "50000 < x <= 65000"
+data$km_driven[data$km_driven > 65000 & data$km_driven <= 80000] <- "65000 < x <= 80000"
+data$km_driven[data$km_driven > 80000 & data$km_driven <= 95000] <- "80000 < x <= 95000"
+data$km_driven[data$km_driven > 95000] <- "x > 95000"
+data$km_driven <- NULL
+
 
 # Convert columns to factors
 index <- 1:ncol(data)
@@ -45,16 +60,24 @@ training_indexes <- createDataPartition(y = data$seller_type, p = training_p, li
 training_data <- data[training_indexes, ]  # Extract training data using training_indexes
 test_data     <- data[-training_indexes, ] # Extract data with the indexes not included in training_indexes 
 
-# Create Linear Model using training data. Formula = all the columns except seller_type 
-model <- rpart(formula = seller_type ~., data = training_data)
-
-# Make the prediction using the model and test data
-prediction <- predict(model, test_data, type = "class")
-
-# Calculate accuracy using Confusion Matrix
-prediction_results <- table(test_data$seller_type, prediction)
-matrix <- confusionMatrix(prediction_results)
-accuracy <- matrix$overall[1]
+best <- NULL
+best_accuracy <- 0
+for (i in 1:10){
+  # Create Linear Model using training data. Formula = all the columns except seller_type 
+  model <- rpart(formula = seller_type ~., data = training_data)
+  
+  # Make the prediction using the model and test data
+  prediction <- predict(model, test_data, type = "class")
+  
+  # Calculate accuracy using Confusion Matrix
+  prediction_results <- table(test_data$seller_type, prediction)
+  matrix <- confusionMatrix(prediction_results)
+  accuracy <- matrix$overall[1]
+  if (accuracy > best_accuracy){
+    best <- model
+    best_accuracy <- accuracy
+  }
+}
 
 # Print the accuracy
 accuracy <- paste0("Accuracy = ", round(100*accuracy, digits = 2), "%")
@@ -85,5 +108,6 @@ rpart.rules(model,
             cover = TRUE, 
             eq = "=", 
             when = "IF", 
-            and = "&&", 
+            and = "&", 
             extra = 4)
+
