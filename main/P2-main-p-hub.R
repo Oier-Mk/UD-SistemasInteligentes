@@ -92,16 +92,14 @@ execute.local.beam.search <- function(problem) {
   # Execute local beam search
   return(local.beam.search(problem = problem))
 }
-test.local.beam.search <- function(filename, p, beams, times) {
+test.local.beam.search <- function(filename, p, beams) {
 
-  results <- vector(mode = "list", length = beams)
+  results <- vector(mode = "list", length = 1)
   
   # Initialize a problem instance for the analysis
   problem <- initialize.problem(filename = filename, p = p)
   
-  for (i in 1:times) {
-    results[[i]] <- execute.local.beam.search(problem)
-  }
+  results[[1]] <- execute.local.beam.search(problem)
   
   # Analyze results
   results_df <- local.analyze.results(results, problem)
@@ -157,22 +155,20 @@ rr50 <- get.best.one(results_df)
 file        <- "../data/p-hub/AP40.txt"
 p           <- 3
 beams       <- 3
-times       <- 10
-results_df  <- test.local.beam.search(file, p, beams,times) 
+results_df  <- test.local.beam.search(file, p, beams) 
 beams3      <- get.best.one(results_df)
 file        <- "../data/p-hub/AP40.txt"
 p           <- 3
 beams       <- 5
-times       <- 20
-results_df  <- test.local.beam.search(file, p, beams,times)
+results_df  <- test.local.beam.search(file, p, beams)
 beams5      <- get.best.one(results_df)
 file        <- "../data/p-hub/AP40.txt"
 p           <- 3
 beams       <- 10
-times       <- 50
-results_df  <- test.local.beam.search(file, p, beams,times)
+results_df  <- test.local.beam.search(file, p, beams)
 beams10     <- get.best.one(results_df)
 
 result      <- rbind(hc10,hc20,hc50,rr10,rr20,rr50,beams3,beams5,beams10)
 
 kable_material(kbl(result, caption = "RESULT p-hub AP40"),  c("striped", "hover", "condensed", "responsive"))
+

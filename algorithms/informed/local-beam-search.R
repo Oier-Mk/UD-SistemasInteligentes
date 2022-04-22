@@ -73,6 +73,13 @@ local.beam.search = function(problem,
     } else {
       # Algorithm stops because a local best has been found
       end_reason <- "Local_Best"
+      
+      #Add of information for further analysis
+      report <- rbind(report, data.frame(iteration = count,
+                                         nodes_frontier = 1,
+                                         depth_of_expanded = current_nodes[[1]]$depth,
+                                         nodes_added_frontier = 1))
+      
       break
     }
     #Add of information for further analysis

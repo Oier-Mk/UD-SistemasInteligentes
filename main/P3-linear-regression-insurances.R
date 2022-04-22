@@ -100,7 +100,7 @@ incremento_por_fumar <- abs(non_smoker_price - smoker_price) #vemos el increment
 
 data$age <- data$age + 5 #incrementamos la edad
 data$newCharges <- predict(model, newdata = data) #predecimos el precio en ese tiempo
-data$difference <- abs(data$newCharges - data$charges) #calculamos el valor absoluto de la diferencia
+data$difference <- data$newCharges - data$charges #calculamos el valor de la diferencia
 data <- data[order(-data$difference),] #ordenamos la diferencia en descendente
 mayor_incremento <- head(data,3) #extraemos los usuarios que mayor incremento tendr'an en 5 anyos
 
