@@ -33,10 +33,6 @@ data$selling_price[strtoi(data$selling_price) > 300000 & strtoi(data$selling_pri
 data$selling_price[strtoi(data$selling_price) > 400000 & strtoi(data$selling_price) <= 500000] <- "400000 < x <= 500000"
 data$selling_price[strtoi(data$selling_price) > 500000 & strtoi(data$selling_price) <= 600000] <- "500000 < x <= 600000"
 data$selling_price[strtoi(data$selling_price) > 600000] <- "x > 600000"
-#data$selling_price <- data$selling_price / 100
-
-
-# data$selling_price <- NULL
 
 data$km_driven[strtoi(data$km_driven) <= 35000] <- "x <= 35000"
 data$km_driven[strtoi(data$km_driven) > 35000 & strtoi(data$km_driven) <= 50000] <- "35000 < x <= 50000"
@@ -44,7 +40,6 @@ data$km_driven[strtoi(data$km_driven) > 50000 & strtoi(data$km_driven) <= 65000]
 data$km_driven[strtoi(data$km_driven) > 65000 & strtoi(data$km_driven) <= 80000] <- "65000 < x <= 80000"
 data$km_driven[strtoi(data$km_driven) > 80000 & strtoi(data$km_driven) <= 95000] <- "80000 < x <= 95000"
 data$km_driven[strtoi(data$km_driven) > 95000] <- "x > 95000"
-# data$km_driven <- NULL
 
 # Convert columns to factors
 index <- 1:ncol(data)

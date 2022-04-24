@@ -12,11 +12,14 @@ public class Schema extends JFrame implements ActionListener {
     JLabel name = new JLabel("NAME");
     JTextField jtfName = new JTextField();
     JLabel year = new JLabel("YEAR");
-    JSpinner jsYear = new JSpinner(new SpinnerNumberModel(1995,1910,2022,1));
+    String years[] = {"<= 2000","2000 < x <= 2005","2005 < x <= 2010","2010 < x <= 2015","2015 < x <= 2020"};
+    JSpinner jsYear = new JSpinner(new SpinnerListModel(years));
     JLabel price = new JLabel("PRICE");
-    JSpinner jsPrice = new JSpinner(new SpinnerNumberModel(10000,0,1000000000,1000));
+    String prices[] = {"x <= 50000","50000  < x <= 100000","100000 < x <= 200000","200000 < x <= 300000","300000 < x <= 400000","400000 < x <= 500000","500000 < x <= 600000","x > 600000"};
+    JSpinner jsPrice = new JSpinner(new SpinnerListModel(prices));
     JLabel kilometers = new JLabel("KILOMETERS");
-    JSpinner jsKilometers = new JSpinner(new SpinnerNumberModel(10000,0,1000000,100));
+    String kilometer[] = {"x <= 35000","35000 < x <= 50000","50000 < x <= 65000","65000 < x <= 80000","80000 < x <= 95000","x > 95000"};
+    JSpinner jsKilometers = new JSpinner(new SpinnerListModel(kilometer));
     JLabel fuel = new JLabel("FUEL");
     String fuels[] = {"Petrol","Diesel","CNG","LPG","Electric"};
     JSpinner jsFuel = new JSpinner(new SpinnerListModel(fuels));
@@ -117,7 +120,7 @@ public class Schema extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchSeller) {
         	if ( ((String)jsSellers.getValue()).contentEquals("NULL") && !((String)jsOwners.getValue()).contentEquals("NULL")) {
-                searchedResult.setText( d.findSeller((String)jtfName.getText(),(int)jsYear.getValue(),(int)jsPrice.getValue(),(int)jsKilometers.getValue(),(String)jsFuel.getValue(),(String)jsTransmission.getValue(),(String)jsSellers.getValue(),(String)jsOwners.getValue()) );
+                searchedResult.setText( d.findSeller((String)jtfName.getText(),(String)jsYear.getValue(),(String)jsPrice.getValue(),(String)jsKilometers.getValue(),(String)jsFuel.getValue(),(String)jsTransmission.getValue(),(String)jsSellers.getValue(),(String)jsOwners.getValue()) );
         	}else {
                 searchedResult.setText("Incorrect for seller");
         	}
@@ -125,7 +128,7 @@ public class Schema extends JFrame implements ActionListener {
         }        
         if (e.getSource() == searchOwner) {
         	if ( !((String)jsSellers.getValue()).contentEquals("NULL") && ((String)jsOwners.getValue()).contentEquals("NULL")) {
-            	searchedResult.setText( d.findOwner((String)jtfName.getText(),(int)jsYear.getValue(),(int)jsPrice.getValue(),(int)jsKilometers.getValue(),(String)jsFuel.getValue(),(String)jsTransmission.getValue(),(String)jsSellers.getValue(),(String)jsOwners.getValue()) );
+            	searchedResult.setText( d.findOwner((String)jtfName.getText(),(String)jsYear.getValue(),(String)jsPrice.getValue(),(String)jsKilometers.getValue(),(String)jsFuel.getValue(),(String)jsTransmission.getValue(),(String)jsSellers.getValue(),(String)jsOwners.getValue()) );
         	}else {
                 searchedResult.setText("Incorrect for owner");
         	}
