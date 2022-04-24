@@ -17,32 +17,6 @@ library(stringr)
 # Read data from CSV
 data <- read.csv("../data/insurance.csv")
 
-char2num<-function(x){
-  groups = unique(x)
-  as.numeric(factor(x, levels=groups))
-}
-
-data$sex <- char2num(data$sex)
-data$smoker <- char2num(data$smoker)
-data$region <- char2num(data$region)
-
-# Set plot structure and margins
-par(mfrow = c(2,6), mar=c(1,1,1,1))
-
-# Scatter Plot - Check linear relationships
-for (col_name in colnames(data)) {
-  if (col_name != "charges") {
-    scatter.smooth(x=data$charges, y=data[[col_name]], main=col_name, col="lightgreen")
-  }
-}
-
-# Correlation between variables
-print("Correlation between each attribute and charges: A low correlation (-0.2 < x < 0.2)", quote=FALSE)
-
-for (col_name in colnames(data)) {
-  print(paste0(col_name, ": ", cor(data$charges, data[[col_name]])), quote=FALSE)
-}
-
 # Percentage of training examples
 training_p <- 0.8
 
@@ -77,24 +51,20 @@ for(i in 1:10){ #Training 10 times the model and getting the one with best resou
 print(paste0("- Mean average error: ", mean_avg_error))
 
 # Print model summary
-summary(model)
+#summary(model)
 
 #Si una persona deja de fumar, ¿cuánto se reduciría el coste?
 #¿Cuánto aumentaría el coste si una persona empieza a fumar?
 
-age = c(20) #creamos una persona ficticia que no fuma con la media de los atributos
-sex = c(2)
-bmi = c(30.66)
-children = c(1)
-smoker = c(2)
-region = c(1)
+data$smoker <- "yes" #indicamos que todos fuman
+smoker_price <- mean(predict(model, newdata = data)) #extraemos el precio estimado
 
-non_smoker_price <- predict(model, newdata = data.frame(age,sex,bmi,children,smoker,region)) #extraemos el precio estimado
+data$smoker <- "no" #indicamos que todos NO fuman
+non_smoker_price <- mean(predict(model, newdata = data)) #extraemos el precio estimado
 
-smoker = c(1) #indicamos que esa misma persona si fuma para ver el cambio
-smoker_price <- predict(model, newdata = data.frame(age,sex,bmi,children,smoker,region)) #extraemos el precio estimado
+incremento_por_fumar <- abs(smoker_price - non_smoker_price) #vemos el incremento o decremento que supone fumar o dejar de hacerlo
 
-incremento_por_fumar <- abs(non_smoker_price - smoker_price) #vemos el incremento o decremento que supone fumar o dejar de hacerlo
+data <- read.csv("../data/insurance.csv") #releemos el fichero para dejar la columna fumador como por defecto
 
 #¿Quiénes son las 3 personas cuyo coste aumentará más en 5 años?
 
