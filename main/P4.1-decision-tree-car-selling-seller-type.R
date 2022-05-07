@@ -75,6 +75,9 @@ for (i in 1:10){
   }
 }
 
+model <- best
+accuracy <- best_accuracy
+
 # Print the accuracy
 accuracy <- paste0("Accuracy = ", round(100*accuracy, digits = 2), "%")
 print(accuracy, quote = FALSE)
