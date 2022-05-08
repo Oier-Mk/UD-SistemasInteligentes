@@ -21,11 +21,11 @@ data$name <- NULL
 
 #Datos anuales numéricos formateados. Agrupación de datos de tipo entero - para optimizar. 
 
-data$year[data$year <= 2000] <- "<= 2000"
-data$year[data$year > 2000 & data$year <= 2005] <- "2000 < x <= 2005"
-data$year[data$year > 2005 & data$year <= 2010] <- "2005 < x <= 2010"
-data$year[data$year > 2010 & data$year <= 2015] <- "2010 < x <= 2015"
-data$year[data$year > 2015 & data$year <= 2020] <- "2015 < x <= 2020"
+data$year[strtoi(data$year) <= 2000] <- "<= 2000"
+data$year[strtoi(data$year) > 2000 & strtoi(data$year) <= 2005] <- "2000 < x <= 2005"
+data$year[strtoi(data$year) > 2005 & strtoi(data$year) <= 2010] <- "2005 < x <= 2010"
+data$year[strtoi(data$year) > 2010 & strtoi(data$year) <= 2015] <- "2010 < x <= 2015"
+data$year[strtoi(data$year) > 2015 & strtoi(data$year) <= 2020] <- "2015 < x <= 2020"
 
 data$selling_price[strtoi(data$selling_price) <= 50000] <- "x <= 50000"
 data$selling_price[strtoi(data$selling_price) >  50000 & strtoi(data$selling_price) <= 100000] <- "50000  < x <= 100000"

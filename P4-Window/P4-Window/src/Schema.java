@@ -120,7 +120,8 @@ public class Schema extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchSeller) {
         	if ( ((String)jsSellers.getValue()).contentEquals("NULL") && !((String)jsOwners.getValue()).contentEquals("NULL")) {
-                searchedResult.setText( d.findSeller((String)jtfName.getText(),(String)jsYear.getValue(),(String)jsPrice.getValue(),(String)jsKilometers.getValue(),(String)jsFuel.getValue(),(String)jsTransmission.getValue(),(String)jsSellers.getValue(),(String)jsOwners.getValue()) );
+                Vehicle v = new Vehicle(true, (String)jtfName.getText(),(String)jsYear.getValue(),(String)jsPrice.getValue(),(String)jsKilometers.getValue(),(String)jsFuel.getValue(),(String)jsTransmission.getValue(),(String)jsSellers.getValue(),(String)jsOwners.getValue());
+        		searchedResult.setText( d.findSeller( v ) );
         	}else {
                 searchedResult.setText("Incorrect for seller");
         	}
@@ -128,7 +129,8 @@ public class Schema extends JFrame implements ActionListener {
         }        
         if (e.getSource() == searchOwner) {
         	if ( !((String)jsSellers.getValue()).contentEquals("NULL") && ((String)jsOwners.getValue()).contentEquals("NULL")) {
-            	searchedResult.setText( d.findOwner((String)jtfName.getText(),(String)jsYear.getValue(),(String)jsPrice.getValue(),(String)jsKilometers.getValue(),(String)jsFuel.getValue(),(String)jsTransmission.getValue(),(String)jsSellers.getValue(),(String)jsOwners.getValue()) );
+                Vehicle v = new Vehicle(false, (String)jtfName.getText(),(String)jsYear.getValue(),(String)jsPrice.getValue(),(String)jsKilometers.getValue(),(String)jsFuel.getValue(),(String)jsTransmission.getValue(),(String)jsSellers.getValue(),(String)jsOwners.getValue());
+                searchedResult.setText( d.findOwner( v ) );
         	}else {
                 searchedResult.setText("Incorrect for owner");
         	}
