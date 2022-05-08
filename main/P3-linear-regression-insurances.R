@@ -14,6 +14,9 @@ library(RKEEL)
 library(stringr)
 
 
+
+
+
 # Read data from CSV
 data <- read.csv("../data/insurance.csv")
 
@@ -31,21 +34,24 @@ test_data     <- data[-training_indexes, ] # Extract data with the indexes not i
 best <- NULL
 error_ratio <- 10000
 
-for(i in 1:10){ #Training 10 times the model and getting the one with best resoults
+for(i in 1:10){ #Training 10 times the model and getting the one with best results
   # Create Linear Model using training data. Formula = all the columns except charges
-  model <- lm(formula = charges ~., data = training_data)
+  model <- lm(formula = charges ~., data = training_data) 
   
   # Make the prediction using the model and test data
   prediction <- predict(model, test_data)
   
-  # Calculate Mean Average Error
+  # Calculate Mean Average Error - comparar predicción (valor estimado) con valor real para hallar error
   mean_avg_error <- mean(abs(prediction - test_data$charges))
   
-  if( mean_avg_error < error_ratio){
+  if( mean_avg_error < error_ratio){ #en caso de hallar mejores resultados, asignar modelo y ratio de error
     best <- model
     error_ratio <- mean_avg_error
   }
 }
+
+model <- best
+mean_avg_error <- error_ratio
 
 # Print Mean Absolute Error
 print(paste0("- Mean average error: ", mean_avg_error))

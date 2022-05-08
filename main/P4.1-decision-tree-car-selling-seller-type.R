@@ -60,6 +60,7 @@ test_data     <- data[-training_indexes, ] # Extract data with the indexes not i
 
 best <- NULL
 best_accuracy <- 0
+
 for (i in 1:10){
   # Create Linear Model using training data. Formula = all the columns except seller_type 
   model <- rpart(formula = seller_type ~., data = training_data)
