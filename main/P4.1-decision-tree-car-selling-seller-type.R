@@ -47,7 +47,7 @@ data$km_driven[strtoi(data$km_driven) > 95000] <- "x > 95000"
 index <- 1:ncol(data)
 data[ , index] <- lapply(data[ , index], as.factor)
 
-# Percentaje of training examples
+# Percentage of training examples
 training_p <- 0.8
 
 # Generate data partition 80% training / 20% test. The result is a vector with the indexes 
@@ -59,7 +59,7 @@ training_data <- data[training_indexes, ]  # Extract training data using trainin
 test_data     <- data[-training_indexes, ] # Extract data with the indexes not included in training_indexes 
 
 best <- NULL
-best_accuracy <- 0
+best_accuracy <- 0 #Inicializamos a 0 porque queremos seleccionar el número mayor de precisión
 
 for (i in 1:10){
   # Create Linear Model using training data. Formula = all the columns except seller_type 

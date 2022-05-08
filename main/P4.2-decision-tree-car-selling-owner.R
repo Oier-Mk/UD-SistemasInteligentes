@@ -19,11 +19,11 @@ data <- read.csv(file = "../data/CAR-DETAILS-FROM-CAR-DEKHO.csv", sep =",", head
 
 data$name <- NULL
 
-data$year[data$year <= 2000] <- "<= 2000"
-data$year[data$year > 2000 & data$year <= 2005] <- "2000 < x <= 2005"
-data$year[data$year > 2005 & data$year <= 2010] <- "2005 < x <= 2010"
-data$year[data$year > 2010 & data$year <= 2015] <- "2010 < x <= 2015"
-data$year[data$year > 2015 & data$year <= 2020] <- "2015 < x <= 2020"
+data$year[strtoi(data$year) <= 2000] <- "<= 2000"
+data$year[strtoi(data$year) > 2000 & strtoi(data$year) <= 2005] <- "2000 < x <= 2005"
+data$year[strtoi(data$year) > 2005 & strtoi(data$year) <= 2010] <- "2005 < x <= 2010"
+data$year[strtoi(data$year) > 2010 & strtoi(data$year) <= 2015] <- "2010 < x <= 2015"
+data$year[strtoi(data$year) > 2015 & strtoi(data$year) <= 2020] <- "2015 < x <= 2020"
 
 data$selling_price[strtoi(data$selling_price) <= 50000] <- "x <= 50000"
 data$selling_price[strtoi(data$selling_price) >  50000 & strtoi(data$selling_price) <= 100000] <- "50000  < x <= 100000"
@@ -98,7 +98,7 @@ rpart.plot(model,
            tweak = 1.1,
            box.palette = "GnYlRd",
            shadow.col = "darkgray",
-           main = "Dealer, indivudial or trustmark dealer?", 
+           main = "Test Drive Car, First, Second, Third, or Fourth & Above Owner?", 
            sub = accuracy)
 
 # Print the rules that represent the Decision Tree
