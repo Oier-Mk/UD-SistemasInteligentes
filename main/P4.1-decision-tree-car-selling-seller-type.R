@@ -19,6 +19,8 @@ data <- read.csv(file = "../data/CAR-DETAILS-FROM-CAR-DEKHO.csv", sep =",", head
 
 data$name <- NULL
 
+#Datos anuales numéricos formateados. Agrupación de datos de tipo entero - para optimizar. 
+
 data$year[data$year <= 2000] <- "<= 2000"
 data$year[data$year > 2000 & data$year <= 2005] <- "2000 < x <= 2005"
 data$year[data$year > 2005 & data$year <= 2010] <- "2005 < x <= 2010"

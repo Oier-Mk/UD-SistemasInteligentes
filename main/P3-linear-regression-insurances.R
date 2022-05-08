@@ -56,11 +56,11 @@ print(paste0("- Mean average error: ", mean_avg_error))
 #Si una persona deja de fumar, ¿cuánto se reduciría el coste?
 #¿Cuánto aumentaría el coste si una persona empieza a fumar?
 
-data$smoker <- "yes" #indicamos que todos fuman
-smoker_price <- mean(predict(model, newdata = data)) #extraemos el precio estimado
-
 data$smoker <- "no" #indicamos que todos NO fuman
 non_smoker_price <- mean(predict(model, newdata = data)) #extraemos el precio estimado
+
+data$smoker <- "yes" #indicamos que todos fuman
+smoker_price <- mean(predict(model, newdata = data)) #extraemos el precio estimado
 
 incremento_por_fumar <- abs(smoker_price - non_smoker_price) #vemos el incremento o decremento que supone fumar o dejar de hacerlo
 
@@ -72,7 +72,7 @@ data$age <- data$age + 5 #incrementamos la edad
 data$newCharges <- predict(model, newdata = data) #predecimos el precio en ese tiempo
 data$difference <- data$newCharges - data$charges #calculamos el valor de la diferencia
 data <- data[order(-data$difference),] #ordenamos la diferencia en descendente
-mayor_incremento <- head(data,3) #extraemos los usuarios que mayor incremento tendr'an en 5 anyos
+mayor_incremento <- head(data,3) #extraemos los usuarios que mayor incremento tendrían en 5 anyos
 
 
 
